@@ -1,15 +1,17 @@
 import React,{useEffect} from "react";
 import GoogleLogin from "react-google-login";
 import {gapi} from 'gapi-script'
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import shareVideo from "../assets/share.mp4";
 import logo from "../assets/logowhite.png";
-
+import {client} from "../client"
 
 const clientID = process.env.REACT_APP_GOOGLE_API_TOKEN
 
 const Login = () => {
+
+  const navigate = useNavigate();
 
  useEffect(() => {
    const initClient = () => {
@@ -32,6 +34,10 @@ const Login = () => {
       username: name,
       image: imageUrl,
     };
+
+    client.createIfNotExists(doc).then(() => {
+      navigate('/',  { replace: true })
+    });
 
   };
    
